@@ -1,0 +1,9 @@
+version: "3.9"
+
+services:
+  device-control:
+    build: .
+    devices:
+      - /dev/mem:/dev/mem
+      - /dev/gpiomem:/dev/gpiomem
+    command: python3 device-controller.py --host "test.mosquitto.org" 

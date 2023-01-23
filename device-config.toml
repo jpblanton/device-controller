@@ -1,0 +1,24 @@
+[tent1_fan1]
+sub_topic = "tent1/fan1/power"
+pub_topic = "tent1/fan1/status"
+err_topic = "tent1/fan1/error"
+gpio_pin = 12
+
+[tent1_fan2]
+sub_topic = "tent1/fan2/power"
+pub_topic = "tent1/fan2/status"
+err_topic = "tent1/fan2/error"
+gpio_pin = 16
+
+[tent1_humidifier]
+sub_topic = "tent1/humidifier/power"
+pub_topic = "tent1/humidifier/status"
+err_topic = "tent1/humidifier/error"
+gpio_pin = 5
+
+# maybe the subscribe topics should be the keys
+# then just if payload is True:
+# GPIO.output(config[topic][pin], low), etc
+# then publish on config[topic][pub_topic]
+
+# or topic.split('/')[:2].join('_') to get the 'name'
