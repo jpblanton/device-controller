@@ -1,6 +1,6 @@
 import argparse
 import atexit
-import logging
+import logging.config
 from datetime import datetime
 
 try:
