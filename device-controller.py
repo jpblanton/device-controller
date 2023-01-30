@@ -1,6 +1,7 @@
 import argparse
 import atexit
 import logging
+from datetime import datetime
 
 try:
     import tomllib
@@ -20,7 +21,7 @@ LOGGING_CONFIG = {
         "file": {
             "level": "DEBUG",
             "class": "logging.FileHandler",
-            "filename": "logs/{:%Y-%m-%d}.log".format(datetime.now()),
+            "filename": "logs/{:%Y-%m-%d}-device-control.log".format(datetime.now()),
             "formatter": "default",
         },
     },
