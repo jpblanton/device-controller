@@ -37,7 +37,7 @@ def cleanup(client):
 
 
 def on_message(client, userdata, message):
-    logger.info(message)
+    logger.info(message.topic + '|' + message.payload)
     payload = message.payload
     device_name = "_".join(message.topic.split("/")[:2])
     try:
