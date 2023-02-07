@@ -31,13 +31,14 @@ LOGGING_CONFIG = {
 logging.config.dictConfig(LOGGING_CONFIG)
 logger = logging.getLogger(__name__)
 
+
 def cleanup(client):
     GPIO.cleanup()
     client.loop_stop()
 
 
 def on_message(client, userdata, message):
-    logger.info(message.topic + '|' + message.payload.decode())
+    logger.info(message.topic + "|" + message.payload.decode())
     payload = message.payload
     device_name = "_".join(message.topic.split("/")[:2])
     try:
@@ -46,18 +47,26 @@ def on_message(client, userdata, message):
         err_topic = userdata["config"][device_name]["err_topic"]
     except KeyError:
         client.publish(
-            "general/error/topic", f"Device name not in config: {device_name}"
+            "general/error/topic",
+            payload=f"Device name not in config: {device_name}",
+            qos=2,
+            retain=True,
         )
     else:
         if payload == b"True":
             GPIO.output(pin, GPIO.LOW)
             # consider checking input(pin) to get status
-            client.publish(pub_topic, True)
+            client.publish(pub_topic, payload=True, qos=2, retain=True)
         elif payload == b"False":
             GPIO.output(pin, GPIO.HIGH)
-            client.publish(pub_topic, False)
+            client.publish(pub_topic, payload=False, qos=2, retain=True)
         else:
-            client.publish(err_topic, f"Invalid value in payload: {payload}")
+            client.publish(
+                err_topic,
+                payload=f"Invalid value in payload: {payload}",
+                qos=2,
+                retain=True,
+            )
 
 
 def mqtt_connect(topics: list[str], host: str, userdata: dict):
